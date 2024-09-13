@@ -17,6 +17,7 @@ import "./App.css";
 import Register from "./pages/Register";
 import DoneTasks from "./pages/DoneTasks";
 import PersonList from "./pages/PersonList";
+import Contact from "./pages/Contact";
 
 const App = () => {
   const isAuthenticated = !!localStorage.getItem("auth"); // Check if the user is logged in
@@ -45,7 +46,8 @@ const App = () => {
           <Route path="done-tasks" element={<DoneTasks />} />
           <Route path="person-list" element={<PersonList />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="about" element={<About />} />
+          <Route path="about-us" element={<About />} />
+          <Route path="contact" element={<Contact />} />
         </Route>
 
         {/* Fallback route for unmatched URLs */}

@@ -1,8 +1,10 @@
 import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { FaLinkedin, FaInstagram, FaTwitter } from "react-icons/fa";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FiFileText, FiCheckSquare, FiUsers } from "react-icons/fi";
+import { FiSearch, FiLogOut } from "react-icons/fi";
+import { toast } from "react-toastify";
 
 // Sidebar Component
 const Sidebar: React.FC = () => (
@@ -102,14 +104,71 @@ const Sidebar: React.FC = () => (
   </div>
 );
 
-// Header Component
-const Header: React.FC = () => (
-  <header className="bg-gray-900 text-white p-4">Dashboard Header</header>
-);
+const Header: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Remove user data from localStorage
+    localStorage.removeItem("auth");
+    toast.info("Logout Successful");
+    navigate("/login");
+  };
+
+  return (
+    <header className="bg-gradient-to-r from-blue-100 to-purple-100 p-4 rounded-bl-lg rounded-br-lg shadow-md flex items-center justify-between">
+      {/* Search Bar */}
+      <div className="flex items-center bg-white rounded-full shadow px-4 py-2 w-60">
+        <FiSearch className="text-gray-500 mr-2" />
+        <input
+          type="text"
+          placeholder="Search"
+          className="bg-transparent outline-none flex-1"
+        />
+      </div>
+
+      {/* Center Nav Links */}
+      <nav className="flex space-x-10">
+        <NavLink
+          to="/profile"
+          className={({ isActive }) =>
+            isActive ? "text-black font-bold" : "text-black hover:underline"
+          }
+        >
+          Profile
+        </NavLink>
+        <NavLink
+          to="/about-us"
+          className={({ isActive }) =>
+            isActive ? "text-black font-bold" : "text-black hover:underline"
+          }
+        >
+          About Us
+        </NavLink>
+        <NavLink
+          to="/contact"
+          className={({ isActive }) =>
+            isActive ? "text-black font-bold" : "text-black hover:underline"
+          }
+        >
+          Contact
+        </NavLink>
+      </nav>
+
+      {/* Exit Button */}
+      <div
+        className="flex items-center text-brown-600 font-bold hover:text-brown-700 cursor-pointer"
+        onClick={handleLogout}
+      >
+        <FiLogOut className="mr-2" size={20} />
+        <span>Exit</span>
+      </div>
+    </header>
+  );
+};
 
 // DashboardLayout Component that renders the sidebar, header, and children (via Outlet)
 const DashboardLayout: React.FC = () => (
-  <div className="flex">
+  <div className="flex bg-[#F2F2FD]">
     <Sidebar />
     <div className="flex-1">
       <Header />

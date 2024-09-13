@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { LuUser2 } from "react-icons/lu";
 import { MdOutlineMail } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const dummyUsers = [
   { name: "John Doe", email: "john@example.com", password: "password123" },
@@ -35,6 +36,7 @@ const Register: React.FC = () => {
     if (userExists) {
       setError("Email already in use, please use another.");
     } else {
+      toast.success("Registeration Successful");
       navigate("/login");
     }
   };

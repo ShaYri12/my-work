@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const dummyUsers = [
   { name: "John Doe", email: "john@example.com", password: "password123" },
@@ -31,6 +32,7 @@ const Login: React.FC = () => {
 
     if (user) {
       localStorage.setItem("auth", JSON.stringify(user)); // Store user in localStorage
+      toast.success("Login Successful");
       navigate("/"); // Redirect to dashboard
     } else {
       setError("Incorrect email or password!");
