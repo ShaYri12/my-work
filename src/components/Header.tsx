@@ -174,7 +174,7 @@ const Header: React.FC = () => {
           <NavLink
             to="/profile"
             className={({ isActive }) =>
-              `text-[20px] text-black font-[700] font-raleway leading-[23.48px] xl:py-[17.83px] py-4 xl:px-[35px] px-5 ${
+              `lg:text-[20px] text-[18px] text-black font-[700] font-raleway leading-[23.48px] xl:py-[17.83px] py-4 xl:px-[35px] px-5 ${
                 isActive ? "bg-[#9D9DFF] rounded-[12px]" : ""
               }`
             }
@@ -184,7 +184,7 @@ const Header: React.FC = () => {
           <NavLink
             to="/about-us"
             className={({ isActive }) =>
-              `text-[20px] text-black font-[700] w-max font-raleway leading-[23.48px] xl:py-[17.83px] py-4 xl:px-[35px] px-5 ${
+              `lg:text-[20px] text-[18px] text-black font-[700] w-max font-raleway leading-[23.48px] xl:py-[17.83px] py-4 xl:px-[35px] px-5 ${
                 isActive ? "bg-[#9D9DFF] rounded-[12px]" : ""
               }`
             }
@@ -194,7 +194,7 @@ const Header: React.FC = () => {
           <NavLink
             to="/contact"
             className={({ isActive }) =>
-              `text-[20px] text-black font-[700] font-raleway leading-[23.48px] xl:py-[17.83px] py-4 xl:px-[35px] px-5 ${
+              `lg:text-[20px] text-[18px] text-black font-[700] font-raleway leading-[23.48px] xl:py-[17.83px] py-4 xl:px-[35px] px-5 ${
                 isActive ? "bg-[#9D9DFF] rounded-[12px]" : ""
               }`
             }
@@ -205,7 +205,7 @@ const Header: React.FC = () => {
 
         {/* Exit Button */}
         <div
-          className="hidden md:flex items-center gap-[12px] text-[20px] font-inter leading-[24.2px] font-[700] hover:text-red-500 cursor-pointer transition"
+          className="hidden md:flex items-center lg:gap-[12px] gap-[6px] lg:text-[20px] text-[18px] font-inter leading-[24.2px] font-[700] hover:text-red-500 cursor-pointer transition"
           onClick={() => {
             localStorage.removeItem("auth");
             toast.info("Logout Successful");
