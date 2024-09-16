@@ -27,8 +27,8 @@ const Tasks: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center md:px-8 px-3 py-8 bg-[#F5DAFF] min-h-screen">
-      <div className="w-full overflow-x-auto">
+    <div className="flex justify-center items-center md:px-8 px-3 py-8 bg-[#F5DAFF] rounded-[30px] min-h-screen">
+      <div className="overflow-x-auto">
         <table
           cellSpacing="3"
           className="w-full max-w-full table-auto bg-transparent"
