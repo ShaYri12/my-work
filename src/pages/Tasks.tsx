@@ -47,7 +47,7 @@ const Tasks: React.FC = () => {
                 </div>
               </th>
               <th className="sm:py-4 py-1 md:px-6 sm:px-2 px-1 text-left ">
-                <div className="bg-[#A15FF480] text-center md:text-[15px] sm:text-[13px] text-[11px] sm:leading-[22.5px] text-[#FCFCFC] font-[700] font-poppins rounded-[12px] py-[16px] px-4">
+                <div className="bg-[#A15FF480] text-center md:text-[15px] sm:text-[13px] text-[11px] sm:leading-[22.5px]  text-[#FCFCFC] font-[700] font-poppins rounded-[12px] py-[16px] px-4">
                   Status
                 </div>
               </th>
@@ -60,7 +60,7 @@ const Tasks: React.FC = () => {
           </thead>
           {/* Table Body */}
           <tbody className="space-y-10">
-            {userTasks.map((row) => (
+            {userTasks.map((row, index) => (
               <React.Fragment key={row.id}>
                 <tr>
                   <td className="md:py-[14px] sm:py-[12px] py-[10px] md:px-6 px-2 rounded-l-[20px] text-center border-r-[1.5px] border-dashed border-[#000000]"></td>
@@ -76,7 +76,7 @@ const Tasks: React.FC = () => {
                 >
                   <td className="sm:py-4 py-1 md:px-6 px-2 bg-white rounded-l-[20px] shadow-lg text-center border-r-[1.5px] border-dashed border-[#000000]">
                     <div className="font-[700] md:text-[25px] sm:text-[15px] text-[11px] text-black font-poppins sm:leading-[37.5px]">
-                      #{row.id}
+                      #{index + 1}
                     </div>
                   </td>
                   <td className="max-w-[320px] sm:py-4 py-1 md:px-6 px-2 bg-white shadow-lg text-left border-r-[1.5px] border-dashed border-[#000000]">
