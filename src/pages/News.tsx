@@ -1,5 +1,4 @@
 import React from "react";
-import { FiClock } from "react-icons/fi";
 import TaskCard from "../components/TaskCard";
 
 interface NewsItem {

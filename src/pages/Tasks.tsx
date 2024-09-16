@@ -1,10 +1,6 @@
 import React from "react";
 import tasksData from "../assets/tasksData"; // Adjust path if necessary
 
-interface User {
-  email: string;
-}
-
 const Tasks: React.FC = () => {
   const storedUser = localStorage.getItem("auth");
   const userEmail: string | null = storedUser
