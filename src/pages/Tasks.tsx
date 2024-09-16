@@ -27,22 +27,19 @@ const Tasks: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center md:px-8 px-3 py-8 bg-[#F5DAFF] rounded-[30px] min-h-screen">
-      <div className="overflow-x-auto">
-        <table
-          cellSpacing="3"
-          className="w-full max-w-full table-auto bg-transparent"
-        >
+    <div className="md:ml-0 ml-20 flex justify-center overflow-auto items-center md:px-8 px-3 py-8 bg-[#F5DAFF] rounded-[30px]">
+      <div className="overflow-x-auto w-full">
+        <table className="w-full bg-transparent">
           {/* Table Header */}
           <thead>
-            <tr className="uppercase">
+            <tr className="uppercase text-nowrap">
               <th className="sm:py-4 py-1 md:px-6 sm:px-2 px-1 text-left ">
-                <div className="bg-[#A15FF480] text-center md:text-[15px] sm:text-[13px] text-[11px] sm:leading-[22.5px] text-[#FCFCFC] font-[700] font-poppins rounded-[12px] py-[16px] px-4">
+                <div className="bg-[#A15FF480] text-center md:text-[15px] sm:text-[13px] text-[11px] sm:leading-[22.5px] text-[#FCFCFC] font-[700] font-poppins rounded-[12px] py-[16px] px-4 text-balance">
                   Key
                 </div>
               </th>
-              <th className="sm:py-4 py-1 md:px-6 sm:px-2 px-1 text-left ">
-                <div className="bg-[#A15FF480] text-center md:text-[15px] sm:text-[13px] text-[11px] sm:leading-[22.5px] text-[#FCFCFC] font-[700] font-poppins rounded-[12px] py-[16px] px-4">
+              <th className=" sm:py-4 py-1 md:px-6 sm:px-2 px-1 text-left ">
+                <div className=" bg-[#A15FF480] text-center md:text-[15px] sm:text-[13px] text-[11px] sm:leading-[22.5px] text-[#FCFCFC] font-[700] font-poppins rounded-[12px] py-[16px] px-4">
                   Summary
                 </div>
               </th>
@@ -62,7 +59,7 @@ const Tasks: React.FC = () => {
           <tbody className="space-y-10">
             {userTasks.map((row, index) => (
               <React.Fragment key={row.id}>
-                <tr>
+                <tr className="text-nowrap">
                   <td className="md:py-[14px] sm:py-[12px] py-[10px] md:px-6 px-2 rounded-l-[20px] text-center border-r-[1.5px] border-dashed border-[#000000]"></td>
                   <td className="md:py-[14px] sm:py-[12px] py-[10px] md:px-6 px-2 rounded-l-[20px] text-center border-r-[1.5px] border-dashed border-[#000000]"></td>
                   <td className="md:py-[14px] sm:py-[12px] py-[10px] md:px-6 px-2 rounded-l-[20px] text-center border-r-[1.5px] border-dashed border-[#000000]"></td>
@@ -79,11 +76,12 @@ const Tasks: React.FC = () => {
                       #{index + 1}
                     </div>
                   </td>
-                  <td className="max-w-[320px] sm:py-4 py-1 md:px-6 px-2 bg-white shadow-lg text-left border-r-[1.5px] border-dashed border-[#000000]">
+                  <td className="min-w-[180px] md:py-[14px] sm:py-[12px] py-[10px] md:px-6 px-2 bg-white shadow-lg text-left border-r-[1.5px] border-dashed border-[#000000]">
                     <span className="font-[400] md:text-[15px] sm:text-[13px] text-[10px] sm:leading-[22.5px] font-poppins text-black">
                       {row.summary}
                     </span>
                   </td>
+
                   <td className="sm:py-4 py-1 md:px-6 px-2 bg-white shadow-lg text-center border-r-[1.5px] border-dashed border-[#000000]">
                     <span
                       className={`font-[700] md:text-[20px] sm:text-[15px] text-[11px] sm:leading-[30px] font-poppins ${getStatusColor(
