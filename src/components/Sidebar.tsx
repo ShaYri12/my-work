@@ -59,7 +59,7 @@ const Sidebar: React.FC = () => {
     <>
       <div
         className={`h-full flex ${
-          isExpanded ? "xl:w-[290px] lg:w-[240px] w-[70px]" : "w-[70px]"
+          isExpanded ? "xl:w-[290px] lg:w-[240px] w-[70px]" : "min-w-[70px]"
         }`}
       ></div>
 
