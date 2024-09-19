@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
-const dummyUsers = [
-  { name: "John Doe", email: "john@example.com", password: "password123" },
-  { name: "Jane Smith", email: "jane@example.com", password: "mypassword" },
-];
+import userData from "../assets/userData";
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -26,7 +22,7 @@ const Login: React.FC = () => {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     const { email, password } = formData;
-    const user = dummyUsers.find(
+    const user = userData.find(
       (u) => u.email === email && u.password === password
     );
 

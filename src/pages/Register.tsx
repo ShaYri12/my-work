@@ -3,11 +3,7 @@ import { LuUser2 } from "react-icons/lu";
 import { MdOutlineMail } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
-const dummyUsers = [
-  { name: "John Doe", email: "john@example.com", password: "password123" },
-  { name: "Jane Smith", email: "jane@example.com", password: "mypassword" },
-];
+import userData from "../assets/userData";
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -31,12 +27,21 @@ const Register: React.FC = () => {
     e.preventDefault();
 
     // Check if email is already in use
-    const userExists = dummyUsers.some((user) => user.email === formData.email);
+    const userExists = userData.some((user) => user.email === formData.email);
 
     if (userExists) {
       setError("Email already in use, please use another.");
     } else {
-      toast.success("Registeration Successful");
+      // Add the new user to the userData array
+      const newUser = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password, // In a real app, password should be hashed
+      };
+
+      userData.push(newUser); // Add the new user to the array
+
+      toast.success("Registration Successful");
       navigate("/login");
     }
   };

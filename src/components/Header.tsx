@@ -211,6 +211,7 @@ const Header: React.FC = () => {
             toast.info("Logout Successful");
             setTimeout(() => {
               navigate("/login");
+              window.location.reload();
             }, 1000);
           }}
         >
