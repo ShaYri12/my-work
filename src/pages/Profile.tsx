@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Task } from "../assets/tasksData";
 import TasksTable from "../components/TasksTable";
 import initialTasksData from "../assets/tasksData";
