@@ -1,21 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Task } from "../assets/tasksData";
 import TasksTable from "../components/TasksTable";
-
-// Helper function to get tasks from localStorage or default to initial data
-const getTasksFromLocalStorage = (): Task[] => {
-  const tasks = localStorage.getItem("tasksData");
-  return tasks ? JSON.parse(tasks) : []; // Default to empty array if no tasks in localStorage
-};
+import tasksData from "../assets/tasksData";
 
 const Tasks: React.FC = () => {
-  // Load tasks from localStorage or use initial data
-  const [tasksInfo, setTasksInfo] = useState<Task[]>(getTasksFromLocalStorage);
-
-  // Update tasks data in localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem("tasksData", JSON.stringify(tasksInfo));
-  }, [tasksInfo]);
+  // Initialize tasksInfo with the imported tasksData
+  const [tasksInfo, setTasksInfo] = useState<Task[]>(tasksData);
 
   const handleStatusChange = (
     taskId: number,
