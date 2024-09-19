@@ -140,7 +140,7 @@ const TasksTable: React.FC<TasksTableProps> = ({ tasks, onStatusChange }) => {
                               }
                               className={`cursor-pointer px-4 py-2 font-[600] text-sm ${getStatusColor(
                                 status
-                              )} text-white hover:bg-gray-200`}
+                              )} hover:bg-gray-200`}
                             >
                               {status}
                             </div>
