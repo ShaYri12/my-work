@@ -83,7 +83,7 @@ const TasksTable: React.FC<TasksTableProps> = ({ tasks }) => {
           </thead>
           {/* Table Body */}
           <tbody className="space-y-10">
-            {tasksState.map((task, index) => (
+            {tasksState.map((task) => (
               <React.Fragment key={task.id}>
                 <tr className="text-nowrap">
                   <td className="md:py-[14px] sm:py-[12px] py-[10px] md:px-6 px-2 rounded-l-[20px] text-center border-r-[1.5px] border-dashed border-[#000000]"></td>
