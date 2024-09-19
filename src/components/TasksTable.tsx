@@ -4,9 +4,13 @@ import { IoIosArrowDown } from "react-icons/io";
 
 interface TasksTableProps {
   tasks: Task[];
+  onStatusChange: (
+    taskId: number,
+    newStatus: "TO DO" | "IN PROGRESS" | "DONE"
+  ) => void;
 }
 
-const TasksTable: React.FC<TasksTableProps> = ({ tasks }) => {
+const TasksTable: React.FC<TasksTableProps> = ({ tasks, onStatusChange }) => {
   const [tasksState, setTasksState] = useState<Task[]>(tasks);
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
   const dropdownRefs = useRef<Map<number, HTMLDivElement | null>>(new Map());
@@ -20,6 +24,7 @@ const TasksTable: React.FC<TasksTableProps> = ({ tasks }) => {
         task.id === taskId ? { ...task, status: newStatus } : task
       )
     );
+    onStatusChange(taskId, newStatus); // Call the callback prop
     setSelectedTaskId(null);
   };
 
