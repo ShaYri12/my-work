@@ -7,7 +7,7 @@ import Sidebar from "../components/Sidebar";
 const DashboardLayout: React.FC = () => (
   <div className="flex bg-[#F2F2FD] w-screen overflow-auto min-h-screen">
     <Sidebar />
-    <div className="flex-1 w-full pl-[80px]">
+    <div className="flex-1 w-full header-outlet">
       <Header />
       <main className=" lg:p-[29px] p-[16px]">
         <Outlet /> {/* This will render the matched child route component */}
