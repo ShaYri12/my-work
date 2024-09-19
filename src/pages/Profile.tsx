@@ -26,7 +26,7 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <TasksTable tasks={userTasks} onStatusChange={handleStatusChange} />
     </div>
   );
