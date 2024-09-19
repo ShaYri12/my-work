@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import {
   FaLinkedin,
   FaInstagram,
@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa";
 
 const Sidebar: React.FC = () => {
+  const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
 
@@ -58,18 +59,14 @@ const Sidebar: React.FC = () => {
     <>
       <div
         className={`h-full flex ${
-          isExpanded
-            ? "xl:w-[290px] lg:w-[240px] w-[70px]"
-            : "lg:w-[240px] w-[70px]"
+          isExpanded ? "xl:w-[290px] lg:w-[240px] w-[70px]" : "w-[70px]"
         }`}
       ></div>
 
       <div
         ref={sidebarRef}
-        className={`bg-white fixed top-0 left-0 h-screen transition-all duration-200 ${
-          isExpanded
-            ? "xl:w-[290px] lg:w-[240px] w-[200px] lg:px-[23px]"
-            : "w-[70px]"
+        className={`bg-white fixed top-0 left-0 h-screen transition-all duration-200 overflow-hidden ${
+          isExpanded ? "xl:w-[290px] lg:w-[240px] w-[200px]" : "w-[70px]"
         } flex flex-col justify-between z-[60]`}
       >
         <img
@@ -80,13 +77,13 @@ const Sidebar: React.FC = () => {
         {/* Top Section */}
         <div className="relative z-[52]">
           {isExpanded && (
-            <h1 className="md:text-[45px] text-[30px] text-[#0F0F0F] md:font-[500] font-[600] leading-[62.69px] text-center my-[7px]">
+            <h1 className="lg:px-[23px] md:text-[45px] text-[30px] text-[#0F0F0F] md:font-[500] font-[600] leading-[62.69px] text-center my-[7px]">
               MyWork
             </h1>
           )}
 
           {/* Menu Button */}
-          <div className={`${isExpanded ? "lg:px-0 px-4" : "px-2"} `}>
+          <div className={`${isExpanded ? "lg:px-[23px] px-4" : "px-2"} `}>
             <button
               onClick={toggleSidebar}
               className={`flex items-center lg:gap-[21px] gap-[12px] bg-[#A15FF4] text-white rounded-[15px] ${
@@ -106,12 +103,16 @@ const Sidebar: React.FC = () => {
           </div>
 
           {/* Navigation Items */}
-          <ul className={`${isExpanded ? "xl:ps-[35px] ps-4" : "ps-2"}`}>
+          <ul
+            className={`${
+              isExpanded ? "xl:ps-[57px] lg:ps-[23px] ps-4" : "ps-2"
+            }`}
+          >
             <li>
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  `flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] lg:-mr-6 ${
+                  `relative flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] ${
                     isActive
                       ? "bg-[#F2F2FD] text-[#383838] rounded-l-full"
                       : "text-black"
@@ -124,13 +125,19 @@ const Sidebar: React.FC = () => {
                 {isExpanded && (
                   <span className="mb-[-4px] font-inter">News</span>
                 )}
+                {location.pathname === "/" && (
+                  <div className="flex">
+                    <LinkStyle isExpanded />
+                  </div>
+                )}
               </NavLink>
             </li>
+
             <li>
               <NavLink
                 to="/tasks"
                 className={({ isActive }) =>
-                  `flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] -mr-6 ${
+                  `relative flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] ${
                     isActive
                       ? "bg-[#F2F2FD] text-[#383838] rounded-l-full"
                       : "text-black"
@@ -143,13 +150,19 @@ const Sidebar: React.FC = () => {
                 {isExpanded && (
                   <span className="mb-[-4px] font-inter">Tasks</span>
                 )}
+                {location.pathname === "/tasks" && (
+                  <div className="flex">
+                    <LinkStyle isExpanded />
+                  </div>
+                )}
               </NavLink>
             </li>
+
             <li>
               <NavLink
                 to="/done-tasks"
                 className={({ isActive }) =>
-                  `flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] -mr-6 ${
+                  `relative flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] ${
                     isActive
                       ? "bg-[#F2F2FD] text-[#383838] rounded-l-full"
                       : "text-black"
@@ -162,13 +175,19 @@ const Sidebar: React.FC = () => {
                 {isExpanded && (
                   <span className="mb-[-4px] font-inter">Done Tasks</span>
                 )}
+                {location.pathname === "/done-tasks" && (
+                  <div className="flex">
+                    <LinkStyle isExpanded />
+                  </div>
+                )}
               </NavLink>
             </li>
+
             <li>
               <NavLink
                 to="/person-list"
                 className={({ isActive }) =>
-                  `flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] -mr-6 ${
+                  `relative flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] ${
                     isActive
                       ? "bg-[#F2F2FD] text-[#383838] rounded-l-full"
                       : "text-black"
@@ -180,6 +199,11 @@ const Sidebar: React.FC = () => {
                 </span>
                 {isExpanded && (
                   <span className="mb-[-4px] font-inter">Person List</span>
+                )}
+                {location.pathname === "/person-list" && (
+                  <div className="flex">
+                    <LinkStyle isExpanded />
+                  </div>
                 )}
               </NavLink>
             </li>
@@ -223,3 +247,35 @@ const Sidebar: React.FC = () => {
 };
 
 export default Sidebar;
+
+interface LinkStyleProps {
+  isExpanded: boolean;
+}
+
+const LinkStyle: React.FC<LinkStyleProps> = ({ isExpanded }) => {
+  return (
+    <>
+      {/* Top span */}
+      <span
+        className={`absolute h-full ${
+          isExpanded ? "top-[-13px]" : "top-[-14px]"
+        } right-0 w-[14px]`}
+      >
+        <img
+          className="h-full w-full"
+          src="/assets/sidebar-style.png"
+          alt="Sidebar Style"
+        />
+      </span>
+
+      {/* Bottom span */}
+      <span className="absolute h-full bottom-[-14px] right-0 w-[14px]">
+        <img
+          className="h-full w-full"
+          src="/assets/sidebar-style.png"
+          alt="Sidebar Style"
+        />
+      </span>
+    </>
+  );
+};

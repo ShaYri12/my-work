@@ -27,7 +27,7 @@ const Tasks: React.FC = () => {
   };
 
   return (
-    <div className="md:ml-0 ml-20 flex justify-center overflow-auto items-center md:px-8 px-3 py-8 bg-[#F5DAFF] rounded-[30px]">
+    <div className="flex justify-center overflow-auto items-center md:px-8 px-3 py-8 bg-[#F5DAFF] rounded-[30px]">
       <div className="overflow-x-auto w-full">
         <table className="w-full bg-transparent">
           {/* Table Header */}
