@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { TbLogout2 } from "react-icons/tb";
 import { MdOutlineSearch } from "react-icons/md";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
@@ -11,6 +11,7 @@ const Drawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   onClose,
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const drawerRef = useRef<HTMLDivElement | null>(null); // Reference for the drawer
 
   // Close drawer when clicking outside
@@ -75,11 +76,16 @@ const Drawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
           {/* Center Nav Links */}
           <nav className="flex flex-col mt-4">
             <NavLink
-              to="/profile"
-              onClick={() => handleLinkClick("/profile")} // Close drawer and navigate
+              to="/profile/info"
+              onClick={() => handleLinkClick("/profile/info")} // Close drawer and navigate
               className={({ isActive }) =>
                 `text-[20px] text-black font-[700] font-raleway leading-[23.48px] py-2 px-4 ${
                   isActive ? "bg-[#9D9DFF] rounded-[12px]" : ""
+                }
+                ${
+                  location.pathname.startsWith("/profile")
+                    ? "bg-[#9D9DFF] rounded-[12px]"
+                    : ""
                 }`
               }
             >
@@ -172,10 +178,15 @@ const Header: React.FC = () => {
         {/* Center Nav Links */}
         <nav className="hidden md:flex gap-1">
           <NavLink
-            to="/profile"
+            to="/profile/info"
             className={({ isActive }) =>
               `lg:text-[20px] text-[18px] text-black font-[700] font-raleway leading-[23.48px] xl:py-[17.83px] py-4 xl:px-[35px] px-5 ${
                 isActive ? "bg-[#9D9DFF] rounded-[12px]" : ""
+              }
+              ${
+                location.pathname.startsWith("/profile")
+                  ? "bg-[#9D9DFF] rounded-[12px]"
+                  : ""
               }`
             }
           >

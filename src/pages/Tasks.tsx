@@ -4,7 +4,6 @@ import TasksTable from "../components/TasksTable";
 import tasksData from "../assets/tasksData";
 
 const Tasks: React.FC = () => {
-  // Initialize tasksInfo with the imported tasksData
   const [tasksInfo, setTasksInfo] = useState<Task[]>(tasksData);
 
   const handleStatusChange = (
@@ -18,7 +17,21 @@ const Tasks: React.FC = () => {
     );
   };
 
-  return <TasksTable tasks={tasksInfo} onStatusChange={handleStatusChange} />;
+  const handleAssigneeChange = (taskId: number, newAssignee: string) => {
+    setTasksInfo((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === taskId ? { ...task, assignee: newAssignee } : task
+      )
+    );
+  };
+
+  return (
+    <TasksTable
+      tasks={tasksInfo}
+      onStatusChange={handleStatusChange}
+      onAssigneeChange={handleAssigneeChange}
+    />
+  );
 };
 
 export default Tasks;

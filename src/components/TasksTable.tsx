@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Task } from "../assets/tasksData";
 import { IoIosArrowDown } from "react-icons/io";
+import userData from "../assets/userData"; // Import the user data
 
 interface TasksTableProps {
   tasks: Task[];
@@ -8,11 +9,19 @@ interface TasksTableProps {
     taskId: number,
     newStatus: "TO DO" | "IN PROGRESS" | "DONE"
   ) => void;
+  onAssigneeChange: (taskId: number, newAssignee: string) => void; // Callback for assignee change
 }
 
-const TasksTable: React.FC<TasksTableProps> = ({ tasks, onStatusChange }) => {
+const TasksTable: React.FC<TasksTableProps> = ({
+  tasks,
+  onStatusChange,
+  onAssigneeChange,
+}) => {
   const [tasksState, setTasksState] = useState<Task[]>(tasks);
-  const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
+  const [openStatusTaskId, setOpenStatusTaskId] = useState<number | null>(null); // Status dropdown tracking
+  const [openAssigneeTaskId, setOpenAssigneeTaskId] = useState<number | null>(
+    null
+  ); // Assignee dropdown tracking
   const dropdownRefs = useRef<Map<number, HTMLDivElement | null>>(new Map());
 
   const handleStatusChange = (
@@ -25,7 +34,17 @@ const TasksTable: React.FC<TasksTableProps> = ({ tasks, onStatusChange }) => {
       )
     );
     onStatusChange(taskId, newStatus); // Call the callback prop
-    setSelectedTaskId(null);
+    setOpenStatusTaskId(null); // Close status dropdown
+  };
+
+  const handleAssigneeChange = (taskId: number, newAssignee: string) => {
+    setTasksState((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === taskId ? { ...task, assignee: newAssignee } : task
+      )
+    );
+    onAssigneeChange(taskId, newAssignee); // Call the callback prop
+    setOpenAssigneeTaskId(null); // Close assignee dropdown
   };
 
   const getStatusColor = (status: string) => {
@@ -43,11 +62,12 @@ const TasksTable: React.FC<TasksTableProps> = ({ tasks, onStatusChange }) => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (selectedTaskId !== null) {
-        const dropdown = dropdownRefs.current.get(selectedTaskId);
-        if (dropdown && !dropdown.contains(event.target as Node)) {
-          setSelectedTaskId(null);
-        }
+      const openDropdown = dropdownRefs.current.get(
+        openStatusTaskId || openAssigneeTaskId || -1
+      );
+      if (openDropdown && !openDropdown.contains(event.target as Node)) {
+        setOpenStatusTaskId(null);
+        setOpenAssigneeTaskId(null);
       }
     };
 
@@ -55,7 +75,7 @@ const TasksTable: React.FC<TasksTableProps> = ({ tasks, onStatusChange }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [selectedTaskId]);
+  }, [openStatusTaskId, openAssigneeTaskId]);
 
   return (
     <div className="flex justify-start">
@@ -110,14 +130,16 @@ const TasksTable: React.FC<TasksTableProps> = ({ tasks, onStatusChange }) => {
                         {task.summary}
                       </span>
                     </td>
+                    {/* Status Dropdown */}
                     <td className="sm:py-4 py-1 md:px-6 px-2 bg-white shadow-lg text-center border-r-[1.5px] border-dashed border-[#000000]">
                       <div className="relative inline-block">
                         <button
-                          onClick={() =>
-                            setSelectedTaskId(
-                              selectedTaskId === task.id ? null : task.id
-                            )
-                          }
+                          onClick={() => {
+                            setOpenStatusTaskId(
+                              openStatusTaskId === task.id ? null : task.id
+                            );
+                            setOpenAssigneeTaskId(null); // Close assignee dropdown if open
+                          }}
                           className={`flex items-center gap-1 font-[700] md:text-[20px] sm:text-[15px] text-[11px] sm:leading-[30px] font-poppins ${getStatusColor(
                             task.status
                           )}`}
@@ -125,7 +147,7 @@ const TasksTable: React.FC<TasksTableProps> = ({ tasks, onStatusChange }) => {
                           {task.status}
                           <IoIosArrowDown />
                         </button>
-                        {selectedTaskId === task.id && (
+                        {openStatusTaskId === task.id && (
                           <div
                             ref={(el) => dropdownRefs.current.set(task.id, el)}
                             className="absolute right-0 mt-2 w-40 bg-white border border-gray-300 font-poppins rounded-lg shadow-lg z-10"
@@ -150,10 +172,40 @@ const TasksTable: React.FC<TasksTableProps> = ({ tasks, onStatusChange }) => {
                         )}
                       </div>
                     </td>
+                    {/* Assignee Dropdown */}
                     <td className="sm:py-4 py-1 md:px-6 px-2 bg-white rounded-r-[20px] shadow-lg text-center">
-                      <span className="font-[700] md:text-[18px] sm:text-[15px] text-[11px] sm:leading-[30px] text-black font-poppins">
-                        {task.assignee}
-                      </span>
+                      <div className="relative inline-block">
+                        <button
+                          onClick={() => {
+                            setOpenAssigneeTaskId(
+                              openAssigneeTaskId === task.id ? null : task.id
+                            );
+                            setOpenStatusTaskId(null); // Close status dropdown if open
+                          }}
+                          className="flex items-center gap-1 font-[700] md:text-[18px] sm:text-[15px] text-[11px] sm:leading-[30px] text-black font-poppins"
+                        >
+                          {task.assignee}
+                          <IoIosArrowDown />
+                        </button>
+                        {openAssigneeTaskId === task.id && (
+                          <div
+                            ref={(el) => dropdownRefs.current.set(task.id, el)}
+                            className="absolute right-0 mt-2 w-40 bg-white border border-gray-300 font-poppins rounded-lg shadow-lg z-10"
+                          >
+                            {userData.map((user) => (
+                              <div
+                                key={user.name}
+                                onClick={() =>
+                                  handleAssigneeChange(task.id, user.name)
+                                }
+                                className="cursor-pointer px-4 py-2 font-[600] text-sm text-black hover:bg-gray-200"
+                              >
+                                {user.name}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     </td>
                   </tr>
                   <tr>

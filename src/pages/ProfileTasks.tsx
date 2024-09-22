@@ -6,7 +6,7 @@ import initialTasksData from "../assets/tasksData";
 const user = JSON.parse(localStorage.getItem("auth") || "{}");
 const userEmail: string = user.email || "";
 
-const Profile: React.FC = () => {
+const ProfileTasks: React.FC = () => {
   // Initialize tasksInfo with the imported initialTasksData
   const [tasksInfo, setTasksInfo] = useState<Task[]>(initialTasksData);
 
@@ -25,11 +25,24 @@ const Profile: React.FC = () => {
     );
   };
 
+  // Handle assignee change
+  const handleAssigneeChange = (taskId: number, newAssignee: string) => {
+    setTasksInfo((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === taskId ? { ...task, assignee: newAssignee } : task
+      )
+    );
+  };
+
   return (
     <div className="">
-      <TasksTable tasks={userTasks} onStatusChange={handleStatusChange} />
+      <TasksTable
+        tasks={userTasks}
+        onStatusChange={handleStatusChange}
+        onAssigneeChange={handleAssigneeChange} // Pass the handler here
+      />
     </div>
   );
 };
 
-export default Profile;
+export default ProfileTasks;

@@ -55,6 +55,152 @@ const Sidebar: React.FC = () => {
     setIsExpanded(!isExpanded);
   };
 
+  const renderProfileLinks = () => (
+    <ul className={`${isExpanded ? "xl:ps-[57px] lg:ps-[23px] ps-4" : "ps-2"}`}>
+      <li>
+        <NavLink
+          to="/profile/info"
+          className={({ isActive }) =>
+            `relative flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] ${
+              isActive
+                ? "bg-[#F2F2FD] text-[#383838] rounded-l-full"
+                : "text-black"
+            }`
+          }
+        >
+          <span className="md:min-h-[25px] min-h-[20px] min-w-[20px] md:min-w-[25px]">
+            <FaClipboardList className="w-full h-full" />
+          </span>
+          {isExpanded && <span className="mb-[-4px] font-inter">Info</span>}
+          {location.pathname === "/profile/info" && (
+            <div className="flex">
+              <LinkStyle isExpanded />
+            </div>
+          )}
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/profile/tasks"
+          className={({ isActive }) =>
+            `relative flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] ${
+              isActive
+                ? "bg-[#F2F2FD] text-[#383838] rounded-l-full"
+                : "text-black"
+            }`
+          }
+        >
+          <span className="md:min-h-[25px] min-h-[20px] min-w-[20px] md:min-w-[25px]">
+            <FaTasks className="w-full h-full" />
+          </span>
+          {isExpanded && <span className="mb-[-4px] font-inter">Tasks</span>}
+          {location.pathname === "/profile/tasks" && (
+            <div className="flex">
+              <LinkStyle isExpanded />
+            </div>
+          )}
+        </NavLink>
+      </li>
+    </ul>
+  );
+
+  const renderMainLinks = () => (
+    <ul className={`${isExpanded ? "xl:ps-[57px] lg:ps-[23px] ps-4" : "ps-2"}`}>
+      <li>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `relative flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] ${
+              isActive
+                ? "bg-[#F2F2FD] text-[#383838] rounded-l-full"
+                : "text-black"
+            }`
+          }
+        >
+          <span className="md:min-h-[25px] min-h-[20px] min-w-[20px] md:min-w-[25px]">
+            <FaNewspaper className="w-full h-full" />
+          </span>
+          {isExpanded && <span className="mb-[-4px] font-inter">News</span>}
+          {location.pathname === "/" && (
+            <div className="flex">
+              <LinkStyle isExpanded />
+            </div>
+          )}
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/tasks"
+          className={({ isActive }) =>
+            `relative flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] ${
+              isActive
+                ? "bg-[#F2F2FD] text-[#383838] rounded-l-full"
+                : "text-black"
+            }`
+          }
+        >
+          <span className="md:min-h-[25px] min-h-[20px] min-w-[20px] md:min-w-[25px]">
+            <FaTasks className="w-full h-full" />
+          </span>
+          {isExpanded && <span className="mb-[-4px] font-inter">Tasks</span>}
+          {location.pathname === "/tasks" && (
+            <div className="flex">
+              <LinkStyle isExpanded />
+            </div>
+          )}
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/done-tasks"
+          className={({ isActive }) =>
+            `relative flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] ${
+              isActive
+                ? "bg-[#F2F2FD] text-[#383838] rounded-l-full"
+                : "text-black"
+            }`
+          }
+        >
+          <span className="md:min-h-[25px] min-h-[20px] min-w-[20px] md:min-w-[25px]">
+            <FaCheckDouble className="w-full h-full" />
+          </span>
+          {isExpanded && (
+            <span className="mb-[-4px] font-inter">Done Tasks</span>
+          )}
+          {location.pathname === "/done-tasks" && (
+            <div className="flex">
+              <LinkStyle isExpanded />
+            </div>
+          )}
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/person-list"
+          className={({ isActive }) =>
+            `relative flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] ${
+              isActive
+                ? "bg-[#F2F2FD] text-[#383838] rounded-l-full"
+                : "text-black"
+            }`
+          }
+        >
+          <span className="md:min-h-[25px] min-h-[20px] min-w-[20px] md:min-w-[25px]">
+            <FaClipboardList className="w-full h-full" />
+          </span>
+          {isExpanded && (
+            <span className="mb-[-4px] font-inter">Person List</span>
+          )}
+          {location.pathname === "/person-list" && (
+            <div className="flex">
+              <LinkStyle isExpanded />
+            </div>
+          )}
+        </NavLink>
+      </li>
+    </ul>
+  );
+
   return (
     <>
       <div
@@ -74,7 +220,6 @@ const Sidebar: React.FC = () => {
           src="/assets/sidebar-gradient.png"
         />
 
-        {/* Top Section */}
         <div className="relative z-[52]">
           {isExpanded && (
             <h1 className="lg:px-[23px] md:text-[45px] text-[30px] text-[#0F0F0F] md:font-[500] font-[600] leading-[62.69px] text-center my-[7px]">
@@ -82,7 +227,6 @@ const Sidebar: React.FC = () => {
             </h1>
           )}
 
-          {/* Menu Button */}
           <div className={`${isExpanded ? "lg:px-[23px] px-4" : "px-2"} `}>
             <button
               onClick={toggleSidebar}
@@ -102,112 +246,10 @@ const Sidebar: React.FC = () => {
             </button>
           </div>
 
-          {/* Navigation Items */}
-          <ul
-            className={`${
-              isExpanded ? "xl:ps-[57px] lg:ps-[23px] ps-4" : "ps-2"
-            }`}
-          >
-            <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  `relative flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] ${
-                    isActive
-                      ? "bg-[#F2F2FD] text-[#383838] rounded-l-full"
-                      : "text-black"
-                  }`
-                }
-              >
-                <span className="md:min-h-[25px] min-h-[20px] min-w-[20px] md:min-w-[25px]">
-                  <FaNewspaper className="w-full h-full" />
-                </span>
-                {isExpanded && (
-                  <span className="mb-[-4px] font-inter">News</span>
-                )}
-                {location.pathname === "/" && (
-                  <div className="flex">
-                    <LinkStyle isExpanded />
-                  </div>
-                )}
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to="/tasks"
-                className={({ isActive }) =>
-                  `relative flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] ${
-                    isActive
-                      ? "bg-[#F2F2FD] text-[#383838] rounded-l-full"
-                      : "text-black"
-                  }`
-                }
-              >
-                <span className="md:min-h-[25px] min-h-[20px] min-w-[20px] md:min-w-[25px]">
-                  <FaTasks className="w-full h-full" />
-                </span>
-                {isExpanded && (
-                  <span className="mb-[-4px] font-inter">Tasks</span>
-                )}
-                {location.pathname === "/tasks" && (
-                  <div className="flex">
-                    <LinkStyle isExpanded />
-                  </div>
-                )}
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to="/done-tasks"
-                className={({ isActive }) =>
-                  `relative flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] ${
-                    isActive
-                      ? "bg-[#F2F2FD] text-[#383838] rounded-l-full"
-                      : "text-black"
-                  }`
-                }
-              >
-                <span className="md:min-h-[25px] min-h-[20px] min-w-[20px] md:min-w-[25px]">
-                  <FaCheckDouble className="w-full h-full" />
-                </span>
-                {isExpanded && (
-                  <span className="mb-[-4px] font-inter">Done Tasks</span>
-                )}
-                {location.pathname === "/done-tasks" && (
-                  <div className="flex">
-                    <LinkStyle isExpanded />
-                  </div>
-                )}
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to="/person-list"
-                className={({ isActive }) =>
-                  `relative flex items-center gap-[6px] text-[16px] font-[500] leading-[25px] py-[20px] px-[18px] ${
-                    isActive
-                      ? "bg-[#F2F2FD] text-[#383838] rounded-l-full"
-                      : "text-black"
-                  }`
-                }
-              >
-                <span className="md:min-h-[25px] min-h-[20px] min-w-[20px] md:min-w-[25px]">
-                  <FaClipboardList className="w-full h-full" />
-                </span>
-                {isExpanded && (
-                  <span className="mb-[-4px] font-inter">Person List</span>
-                )}
-                {location.pathname === "/person-list" && (
-                  <div className="flex">
-                    <LinkStyle isExpanded />
-                  </div>
-                )}
-              </NavLink>
-            </li>
-          </ul>
+          {/* Conditional rendering based on location */}
+          {location.pathname.startsWith("/profile")
+            ? renderProfileLinks()
+            : renderMainLinks()}
         </div>
 
         {/* Social Media Icons */}
