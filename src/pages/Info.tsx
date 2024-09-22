@@ -1,10 +1,22 @@
 import React from "react";
 
-const About: React.FC = () => (
-  <div>
-    <h1 className="text-3xl font-bold">Info Page</h1>
-    <p>This is the Info page content.</p>
-  </div>
-);
+const Info: React.FC = () => {
+  // Retrieve user data from localStorage
+  const user = JSON.parse(localStorage.getItem("auth") || "{}");
+  const userName = user.name || "Guest"; // Default to "Guest" if no name
+  const userEmail = user.email || "No email provided"; // Default email message
 
-export default About;
+  return (
+    <div className="mt-4">
+      <h2 className="text-2xl font-bold">User Information</h2>
+      <p>
+        <strong>Name:</strong> {userName}
+      </p>
+      <p>
+        <strong>Email:</strong> {userEmail}
+      </p>
+    </div>
+  );
+};
+
+export default Info;
