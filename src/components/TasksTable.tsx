@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Task } from "../assets/tasksData";
 import { IoIosArrowDown } from "react-icons/io";
-import userData from "../assets/userData"; // Import the user data
 
 interface TasksTableProps {
   tasks: Task[];
@@ -9,7 +8,11 @@ interface TasksTableProps {
     taskId: number,
     newStatus: "TO DO" | "IN PROGRESS" | "DONE"
   ) => void;
-  onAssigneeChange: (taskId: number, newAssignee: string) => void; // Callback for assignee change
+  onAssigneeChange: (
+    taskId: number,
+    newAssignee: string,
+    newEmail: string
+  ) => void;
 }
 
 const TasksTable: React.FC<TasksTableProps> = ({
@@ -18,11 +21,22 @@ const TasksTable: React.FC<TasksTableProps> = ({
   onAssigneeChange,
 }) => {
   const [tasksState, setTasksState] = useState<Task[]>(tasks);
+  const [userData, setUserData] = useState<{ name: string; email: string }[]>(
+    []
+  ); // Updated to include email
   const [openStatusTaskId, setOpenStatusTaskId] = useState<number | null>(null); // Status dropdown tracking
   const [openAssigneeTaskId, setOpenAssigneeTaskId] = useState<number | null>(
     null
   ); // Assignee dropdown tracking
   const dropdownRefs = useRef<Map<number, HTMLDivElement | null>>(new Map());
+
+  useEffect(() => {
+    // Load user data from localStorage
+    const storedUserData = localStorage.getItem("userData");
+    if (storedUserData) {
+      setUserData(JSON.parse(storedUserData)); // Parse the user data from localStorage
+    }
+  }, []);
 
   const handleStatusChange = (
     taskId: number,
@@ -37,13 +51,19 @@ const TasksTable: React.FC<TasksTableProps> = ({
     setOpenStatusTaskId(null); // Close status dropdown
   };
 
-  const handleAssigneeChange = (taskId: number, newAssignee: string) => {
+  const handleAssigneeChange = (
+    taskId: number,
+    newAssignee: string,
+    newEmail: string
+  ) => {
     setTasksState((prevTasks) =>
       prevTasks.map((task) =>
-        task.id === taskId ? { ...task, assignee: newAssignee } : task
+        task.id === taskId
+          ? { ...task, assignee: newAssignee, email: newEmail }
+          : task
       )
     );
-    onAssigneeChange(taskId, newAssignee); // Call the callback prop
+    onAssigneeChange(taskId, newAssignee, newEmail); // Call the callback prop with email
     setOpenAssigneeTaskId(null); // Close assignee dropdown
   };
 
@@ -196,7 +216,11 @@ const TasksTable: React.FC<TasksTableProps> = ({
                               <div
                                 key={user.name}
                                 onClick={() =>
-                                  handleAssigneeChange(task.id, user.name)
+                                  handleAssigneeChange(
+                                    task.id,
+                                    user.name,
+                                    user.email
+                                  )
                                 }
                                 className="cursor-pointer px-4 py-2 font-[600] text-sm text-black hover:bg-gray-200"
                               >

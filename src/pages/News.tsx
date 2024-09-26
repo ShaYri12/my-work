@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TaskCard from "../components/TaskCard";
 
 interface NewsItem {
@@ -34,6 +34,14 @@ const newsData: NewsItem[] = [
 ];
 
 const News: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth", // Smooth scroll to the top
+    });
+  }, []);
+
   return (
     <div>
       <div className="bg-white lg:px-[22px] px-[20px] py-[14px] rounded-[29px] shadow">

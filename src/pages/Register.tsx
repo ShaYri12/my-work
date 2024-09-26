@@ -3,7 +3,6 @@ import { LuUser2 } from "react-icons/lu";
 import { MdOutlineMail } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import userData from "../assets/userData";
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -26,20 +25,29 @@ const Register: React.FC = () => {
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Retrieve the current users from localStorage
+    const storedUsers = localStorage.getItem("userData");
+    let users = storedUsers ? JSON.parse(storedUsers) : [];
+
     // Check if email is already in use
-    const userExists = userData.some((user) => user.email === formData.email);
+    const userExists = users.some(
+      (user: { email: string }) => user.email === formData.email
+    );
 
     if (userExists) {
       setError("Email already in use, please use another.");
     } else {
-      // Add the new user to the userData array
+      // Add the new user to the localStorage userData
       const newUser = {
         name: formData.name,
         email: formData.email,
         password: formData.password, // In a real app, password should be hashed
       };
 
-      userData.push(newUser); // Add the new user to the array
+      users.push(newUser); // Add the new user to the array
+
+      // Update localStorage with the new user data
+      localStorage.setItem("userData", JSON.stringify(users));
 
       toast.success("Registration Successful");
       navigate("/login");
@@ -56,6 +64,7 @@ const Register: React.FC = () => {
       <img
         src="/assets/login-object.png"
         className="absolute left-0 h-full z-[1]"
+        alt="Background"
       />
       <div className="relative z-[2] py-[50px] max-w-[400px] w-full">
         <h1 className="text-center text-white text-[45px] font-[500] leading-[62.69px] mb-[30px]">
@@ -107,7 +116,8 @@ const Register: React.FC = () => {
               <span
                 className={`absolute left-4 ${
                   error ? "text-[#AE2D5D]" : "text-[#B1E457]"
-                } flex items-center`}
+                }
+                flex items-center`}
               >
                 <MdOutlineMail size={24} />
               </span>
@@ -163,7 +173,8 @@ const Register: React.FC = () => {
                 isFormIncomplete()
                   ? "bg-[#A15FF433] text-[#6C727F]"
                   : "bg-[#B1E457] text-[#212936] hover:bg-[#B1E470]"
-              } h-[45px] text-[24px] font-[500] leading-[33.43px] flex items-center justify-center rounded-full transition mt-[22px]`}
+              }
+              h-[45px] text-[24px] font-[500] leading-[33.43px] flex items-center justify-center rounded-full transition mt-[22px]`}
               disabled={isFormIncomplete()} // Disable button if form is incomplete
             >
               Sign Up

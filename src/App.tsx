@@ -18,8 +18,20 @@ import DoneTasks from "./pages/DoneTasks";
 import PersonList from "./pages/PersonList";
 import Contact from "./pages/Contact";
 import Info from "./pages/Info";
+import userData from "./assets/userData";
+import tasksData from "./assets/tasksData";
 
 const App = () => {
+  // Check if there is already data in localStorage for 'auth'
+  if (!localStorage.getItem("userData")) {
+    localStorage.setItem("userData", JSON.stringify(userData));
+  }
+
+  // Check if there is already data in localStorage for 'taskData'
+  if (!localStorage.getItem("tasksData")) {
+    localStorage.setItem("tasksData", JSON.stringify(tasksData));
+  }
+
   const isAuthenticated = !!localStorage.getItem("auth"); // Check if the user is logged in
 
   return (

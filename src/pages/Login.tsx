@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import userData from "../assets/userData";
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +10,18 @@ const Login: React.FC = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Store dummy user data in localStorage if not already present
+    const initialUserData = [
+      { name: "John Doe", email: "john@example.com", password: "password123" },
+      { name: "Jane Smith", email: "jane@example.com", password: "mypassword" },
+    ];
+    if (!localStorage.getItem("userData")) {
+      localStorage.setItem("userData", JSON.stringify(initialUserData));
+    }
+  }, []);
+
+  // Handle form input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({
@@ -19,19 +30,32 @@ const Login: React.FC = () => {
     }));
   };
 
+  // Handle login form submission
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     const { email, password } = formData;
-    const user = userData.find(
-      (u) => u.email === email && u.password === password
-    );
 
-    if (user) {
-      localStorage.setItem("auth", JSON.stringify(user)); // Store user in localStorage
-      toast.success("Login Successful");
-      navigate("/"); // Redirect to dashboard
+    // Retrieve the userData from localStorage
+    const storedUsers = localStorage.getItem("userData");
+    if (storedUsers) {
+      const users = JSON.parse(storedUsers);
+
+      // Check if the entered email and password match any user in localStorage
+      const user = users.find(
+        (u: { email: string; password: string }) =>
+          u.email === email && u.password === password
+      );
+
+      if (user) {
+        // Store logged-in user in localStorage with key "auth"
+        localStorage.setItem("auth", JSON.stringify(user));
+        toast.success("Login Successful");
+        navigate("/"); // Redirect to dashboard
+      } else {
+        setError("Incorrect email or password!");
+      }
     } else {
-      setError("Incorrect email or password!");
+      setError("No user data found in the system.");
     }
   };
 
@@ -45,6 +69,7 @@ const Login: React.FC = () => {
       <img
         src="/assets/login-object.png"
         className="absolute left-0 h-full z-[1]"
+        alt="Background"
       />
       <div className="relative z-[2] py-[50px] max-w-[400px] w-full">
         <h1 className="text-center text-white text-[45px] font-[500] leading-[62.69px] mb-[30px]">
@@ -67,6 +92,7 @@ const Login: React.FC = () => {
                 <img
                   className="w-[24px] h-[24px]"
                   src="/assets/icons/error.svg"
+                  alt="Error"
                 />
               </span>
               <span className="mb-[-6px]">{error}</span>
