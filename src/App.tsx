@@ -20,17 +20,20 @@ import Contact from "./pages/Contact";
 import Info from "./pages/Info";
 import userData from "./assets/userData";
 import tasksData from "./assets/tasksData";
+import { useEffect } from "react";
 
 const App = () => {
-  // Check if there is already data in localStorage for 'auth'
-  if (!localStorage.getItem("userData")) {
-    localStorage.setItem("userData", JSON.stringify(userData));
-  }
+  useEffect(() => {
+    // Check and initialize 'userData' if not present
+    if (!localStorage.getItem("userData")) {
+      localStorage.setItem("userData", JSON.stringify(userData));
+    }
 
-  // Check if there is already data in localStorage for 'taskData'
-  if (!localStorage.getItem("tasksData")) {
-    localStorage.setItem("tasksData", JSON.stringify(tasksData));
-  }
+    // Check and initialize 'tasksData' if not present
+    if (!localStorage.getItem("tasksData")) {
+      localStorage.setItem("tasksData", JSON.stringify(tasksData));
+    }
+  }, []); // Add dependency array to run only once when the component mounts
 
   const isAuthenticated = !!localStorage.getItem("auth"); // Check if the user is logged in
 
